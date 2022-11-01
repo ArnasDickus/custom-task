@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { getIdFromUrl } from "src/utils/string-manipulation";
 import styled from "styled-components";
+import { deviceBreakpoints } from "styles/breakpoints";
 import { LargeWrapper } from "styles/wrappers";
 
 const PageMovieId = () => {
@@ -161,11 +162,19 @@ const ContainerPageMovieId = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    @media ${deviceBreakpoints.tablet} {
+      justify-content: center;
+    }
   }
 
   .custom_card_item {
     width: 250px;
     max-width: 300px;
     height: 200px;
+
+    @media ${deviceBreakpoints.tablet} {
+      width: 100%;
+      max-width: inherit;
+    }
   }
 `;
