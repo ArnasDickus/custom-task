@@ -1,3 +1,4 @@
+import CustomAlert from "@components/utils/alerts/custom-alert/custom-alert";
 import CustomCard from "@components/utils/cards/custom-card/custom-card";
 import DataPiece from "@components/utils/datapiece/datapiece";
 import { routes } from "@constants/routes";
@@ -95,6 +96,13 @@ const PageMovieId = () => {
 
   return (
     <ContainerPageMovieId>
+      {displayAlert ? (
+        <CustomAlert
+          title="Error"
+          description="Something went wrong with the server try again later"
+          severity="error"
+        />
+      ) : null}
       <LargeWrapper>
         <div className="datapiece_container">
           <DataPiece label="Title" text={swapiMovie?.title || "unknown"} />
@@ -162,6 +170,7 @@ const ContainerPageMovieId = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+
     @media ${deviceBreakpoints.tablet} {
       justify-content: center;
     }
