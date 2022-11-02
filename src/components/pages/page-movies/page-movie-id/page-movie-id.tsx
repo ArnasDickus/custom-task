@@ -51,8 +51,6 @@ const PageMovieId = () => {
           // eslint-disable-next-line no-console
           console.error("Movies Swapi > ", error?.toString());
         });
-    } else {
-      setDisplayAlert(true);
     }
   }, [displayAlert, params?.movieid]);
 

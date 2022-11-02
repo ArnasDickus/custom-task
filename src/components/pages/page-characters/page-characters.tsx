@@ -5,7 +5,7 @@ import {
   ISwapiCharacters,
   swapiDataHeaders,
 } from "@constants/static-data/swapi-data";
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import axios from "axios";
 import { debounce } from "lodash";
 import { useRouter } from "next/router";
@@ -23,6 +23,8 @@ const PageCharacters = () => {
   >([]);
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
   const [searchTextVal, setSearchTextVal] = useState("");
+  const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState<number>(0);
 
   const [displayAlert, setDisplayAlert] = useState(false);
 
@@ -42,14 +44,17 @@ const PageCharacters = () => {
   useEffect(() => {
     axios({
       method: "GET",
-      url: `${process.env.NEXT_PUBLIC_SWAPI_URL}/people?search=${debouncedSearchText}`,
+      url: `${process.env.NEXT_PUBLIC_SWAPI_URL}/people?search=${debouncedSearchText}&page=${page}`,
       headers: swapiDataHeaders,
     })
       .then((val) => {
         if (displayAlert) {
           setDisplayAlert(false);
         }
-        // TODO implement paginator
+        if (!pageCount) {
+          setPageCount(val?.data?.count);
+        }
+
         setSwapiCharacters(val?.data?.results);
       })
       .catch((error) => {
@@ -57,7 +62,7 @@ const PageCharacters = () => {
         // eslint-disable-next-line no-console
         console.error("Movies Swapi > ", error?.toString());
       });
-  }, [displayAlert, debouncedSearchText]);
+  }, [displayAlert, debouncedSearchText, page, pageCount]);
 
   React.useEffect(() => {
     return () => {
@@ -104,6 +109,28 @@ const PageCharacters = () => {
               );
             })}
           </div>
+          <div className="button_container">
+            <Button
+              disabled={page <= 1}
+              onClick={() => {
+                if (page > 1) {
+                  setPage((oldVal) => oldVal - 1);
+                }
+              }}
+            >
+              Previous Page
+            </Button>
+            <Button
+              disabled={page * 10 >= pageCount}
+              onClick={() => {
+                if (page * 10 < pageCount) {
+                  setPage((oldVal) => oldVal + 1);
+                }
+              }}
+            >
+              Next Page
+            </Button>
+          </div>
         </LargeWrapper>
       </div>
     </ContainerPageCharacters>
@@ -137,5 +164,11 @@ const ContainerPageCharacters = styled.div`
       width: 100%;
       max-width: inherit;
     }
+  }
+
+  .button_container {
+    padding-top: 20px;
+    display: flex;
+    gap: 20px;
   }
 `;
