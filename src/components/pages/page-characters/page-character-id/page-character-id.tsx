@@ -109,31 +109,27 @@ const PageCharacterId = () => {
               text={swapiCharacter?.height || "unknown"}
             />
             <DataPiece
-              label="Height"
-              text={swapiCharacter?.height || "unknown"}
-            />
-            <DataPiece
-              label="weight"
+              label="Weight"
               text={swapiCharacter?.mass || "unknown"}
             />
             <DataPiece
-              label="hair color"
+              label="Hair color"
               text={swapiCharacter?.hair_color || "unknown"}
             />
             <DataPiece
-              label="hair color"
+              label="Skin color"
               text={swapiCharacter?.skin_color || "unknown"}
             />
             <DataPiece
-              label="hair color"
+              label="Eye color"
               text={swapiCharacter?.eye_color || "unknown"}
             />
             <DataPiece
-              label="hair color"
+              label="Birth Year"
               text={swapiCharacter?.birth_year || "unknown"}
             />
             <DataPiece
-              label="hair color"
+              label="Gender"
               text={swapiCharacter?.gender || "unknown"}
             />
           </div>
