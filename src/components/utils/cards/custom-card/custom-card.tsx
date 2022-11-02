@@ -5,6 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import styled from "styled-components";
+import Link from "next/link";
 
 const CustomCard = (props: NCustomCard.IProps) => {
   const { title, description, submitTitle, handleOnClick } = props;

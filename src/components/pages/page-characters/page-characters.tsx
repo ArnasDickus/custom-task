@@ -5,9 +5,11 @@ import {
   ISwapiCharacters,
   swapiDataHeaders,
 } from "@constants/static-data/swapi-data";
+import { TextField } from "@mui/material";
 import axios from "axios";
+import { debounce } from "lodash";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { getIdFromUrl } from "src/utils/string-manipulation";
 import styled from "styled-components";
 import { deviceBreakpoints } from "styles/breakpoints";
@@ -19,8 +21,16 @@ const PageCharacters = () => {
   const [swapiCharacters, setSwapiCharacters] = useState<
     ISwapiCharacters[] | []
   >([]);
+  const [debouncedSearchText, setDebouncedSearchText] = useState("");
+  const [searchTextVal, setSearchTextVal] = useState("");
 
   const [displayAlert, setDisplayAlert] = useState(false);
+
+  const debouncedSearch = useRef(
+    debounce(async (criteria) => {
+      setDebouncedSearchText(criteria);
+    }, 1000)
+  ).current;
 
   const handleClick = (characterUrl: string) => {
     router.push({
@@ -32,7 +42,7 @@ const PageCharacters = () => {
   useEffect(() => {
     axios({
       method: "GET",
-      url: `${process.env.NEXT_PUBLIC_SWAPI_URL}/people`,
+      url: `${process.env.NEXT_PUBLIC_SWAPI_URL}/people?search=${debouncedSearchText}`,
       headers: swapiDataHeaders,
     })
       .then((val) => {
@@ -47,7 +57,13 @@ const PageCharacters = () => {
         // eslint-disable-next-line no-console
         console.error("Movies Swapi > ", error?.toString());
       });
-  }, [displayAlert]);
+  }, [displayAlert, debouncedSearchText]);
+
+  React.useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
 
   return (
     <ContainerPageCharacters>
@@ -59,6 +75,17 @@ const PageCharacters = () => {
         />
       ) : null}
       <LargeWrapper>
+        <div>
+          <TextField
+            label="Search characters"
+            variant="standard"
+            value={searchTextVal}
+            onChange={(e) => {
+              debouncedSearch(e?.target?.value);
+              setSearchTextVal(e?.target?.value);
+            }}
+          />
+        </div>
         <div className="custom_card_container">
           {swapiCharacters?.map((character, index) => {
             return (
