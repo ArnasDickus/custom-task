@@ -103,47 +103,49 @@ const PageMovieId = () => {
           severity="error"
         />
       ) : null}
-      <LargeWrapper>
-        <div className="datapiece_container">
-          <DataPiece label="Title" text={swapiMovie?.title || "unknown"} />
-          <DataPiece
-            label="Episode Id"
-            text={swapiMovie?.episode_id?.toString() || "unknown"}
-          />
-          <DataPiece
-            label="Opening Crawl"
-            text={swapiMovie?.opening_crawl || "unknown"}
-          />
-          <DataPiece
-            label="Director"
-            text={swapiMovie?.director || "unknown"}
-          />
-          <DataPiece
-            label="Producer"
-            text={swapiMovie?.producer || "unknown"}
-          />
-          <DataPiece
-            label="Release data"
-            text={swapiMovie?.release_data || "unknown"}
-          />
-        </div>
-        <div className="custom_card_container">
-          {swapiCharacters?.map((character, index) => {
-            return (
-              <div className="custom_card_item" key={index}>
-                <CustomCard
-                  title={character?.name}
-                  description=""
-                  submitTitle={"More"}
-                  handleOnClick={() => {
-                    handleClick(character?.url);
-                  }}
-                />
-              </div>
-            );
-          })}
-        </div>
-      </LargeWrapper>
+      <div className="container">
+        <LargeWrapper>
+          <div className="datapiece_container">
+            <DataPiece label="Title" text={swapiMovie?.title || "unknown"} />
+            <DataPiece
+              label="Episode Id"
+              text={swapiMovie?.episode_id?.toString() || "unknown"}
+            />
+            <DataPiece
+              label="Opening Crawl"
+              text={swapiMovie?.opening_crawl || "unknown"}
+            />
+            <DataPiece
+              label="Director"
+              text={swapiMovie?.director || "unknown"}
+            />
+            <DataPiece
+              label="Producer"
+              text={swapiMovie?.producer || "unknown"}
+            />
+            <DataPiece
+              label="Release data"
+              text={swapiMovie?.release_data || "unknown"}
+            />
+          </div>
+          <div className="custom_card_container">
+            {swapiCharacters?.map((character, index) => {
+              return (
+                <div className="custom_card_item" key={index}>
+                  <CustomCard
+                    title={character?.name}
+                    description=""
+                    submitTitle={"More"}
+                    handleOnClick={() => {
+                      handleClick(character?.url);
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </LargeWrapper>
+      </div>
     </ContainerPageMovieId>
   );
 };
@@ -157,7 +159,9 @@ export namespace NPageMovieId {
 }
 
 const ContainerPageMovieId = styled.div`
-  padding: 20px 0;
+  .container {
+    padding: 20px 0;
+  }
 
   .datapiece_container {
     display: flex;

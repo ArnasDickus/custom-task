@@ -74,36 +74,38 @@ const PageCharacters = () => {
           severity="error"
         />
       ) : null}
-      <LargeWrapper>
-        <div>
-          <TextField
-            label="Search characters"
-            variant="standard"
-            value={searchTextVal}
-            onChange={(e) => {
-              debouncedSearch(e?.target?.value);
-              setSearchTextVal(e?.target?.value);
-            }}
-          />
-        </div>
-        <div className="custom_card_container">
-          {swapiCharacters?.map((character, index) => {
-            return (
-              <div key={index} className="custom_card_item">
-                <CustomCard
-                  key={index}
-                  title={character?.name}
-                  description=""
-                  submitTitle={"More"}
-                  handleOnClick={() => {
-                    handleClick(character?.url);
-                  }}
-                />
-              </div>
-            );
-          })}
-        </div>
-      </LargeWrapper>
+      <div className="container">
+        <LargeWrapper>
+          <div>
+            <TextField
+              label="Search characters"
+              variant="standard"
+              value={searchTextVal}
+              onChange={(e) => {
+                debouncedSearch(e?.target?.value);
+                setSearchTextVal(e?.target?.value);
+              }}
+            />
+          </div>
+          <div className="custom_card_container">
+            {swapiCharacters?.map((character, index) => {
+              return (
+                <div key={index} className="custom_card_item">
+                  <CustomCard
+                    key={index}
+                    title={character?.name}
+                    description=""
+                    submitTitle={"More"}
+                    handleOnClick={() => {
+                      handleClick(character?.url);
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </LargeWrapper>
+      </div>
     </ContainerPageCharacters>
   );
 };
@@ -111,7 +113,9 @@ const PageCharacters = () => {
 export default PageCharacters;
 
 const ContainerPageCharacters = styled.div`
-  padding: 20px 0;
+  .container {
+    padding: 20px 0;
+  }
 
   .custom_card_container {
     padding-top: 20px;
