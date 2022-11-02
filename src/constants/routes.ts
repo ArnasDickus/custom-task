@@ -4,4 +4,5 @@ export const routes = {
   "movies/movieId": "/movies/[movieId]",
   characters: "/characters",
   "characters/characterId": "/characters/[characterId]",
+  examples: "/examples",
 };

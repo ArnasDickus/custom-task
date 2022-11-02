@@ -1,6 +1,5 @@
 import { routes } from "src/constants/routes";
 
-
 export const navLinks: NNavLinks.INavLinks[] = [
   {
     display: true,
@@ -17,12 +16,17 @@ export const navLinks: NNavLinks.INavLinks[] = [
     routeName: "Characters",
     routeLink: routes["characters"],
   },
+  {
+    display: true,
+    routeName: "Examples",
+    routeLink: routes["examples"],
+  },
 ];
 
 export namespace NNavLinks {
-    export interface INavLinks {
-        display: boolean;
-        routeName: string;
-        routeLink: string;
-    }
+  export interface INavLinks {
+    display: boolean;
+    routeName: string;
+    routeLink: string;
+  }
 }
