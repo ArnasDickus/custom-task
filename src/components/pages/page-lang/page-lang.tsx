@@ -54,7 +54,7 @@ const PageLang = () => {
         />
         <DataPiece
           label="Ideas to improve project"
-          text="I could write unit tests, add translations, add route translations, implement server side rendering. Implement a way to measure performance etc."
+          text="I could write unit tests, add translations, add route translations, implement server side rendering although github pages wouldn't work correctly. Implement a way to measure performance etc."
         />
       </LargeWrapper>
     </ContainerPageLang>
