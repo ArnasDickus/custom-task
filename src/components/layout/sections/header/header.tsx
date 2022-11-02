@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Header = () => {
   const router = useRouter();
@@ -25,6 +26,17 @@ const Header = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const displayLinks = (routeLink: string) => {
+    if (routeLink === "/" && router.pathname !== "/") {
+      return "inactive";
+    }
+
+    if (router.pathname.includes(routeLink)) {
+      return "active";
+    }
+    return "inactive";
   };
 
   return (
@@ -80,19 +92,23 @@ const Header = () => {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {navLinks.map((link, index) => (
-                  <MenuItem
-                    key={index}
-                    onClick={() => {
-                      handleCloseNavMenu();
-                      router?.push(link?.routeLink);
-                    }}
-                  >
-                    <Typography textAlign="center">
-                      {link?.routeName}
-                    </Typography>
-                  </MenuItem>
-                ))}
+                {navLinks.map((link, index) => {
+                  return (
+                    <Link key={index} href={link.routeLink}>
+                      <MenuItem
+                        key={index}
+                        selected={link.routeLink === router.pathname}
+                        onClick={() => {
+                          handleCloseNavMenu();
+                        }}
+                      >
+                        <Typography textAlign="center">
+                          {link?.routeName}
+                        </Typography>
+                      </MenuItem>
+                    </Link>
+                  );
+                })}
               </Menu>
             </Box>
             <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -115,18 +131,19 @@ const Header = () => {
               Custom Task
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {navLinks.map((link, index) => (
-                <Button
-                  key={index}
-                  onClick={() => {
-                    handleCloseNavMenu();
-                    router.push(link?.routeLink);
-                  }}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {link?.routeName}
-                </Button>
-              ))}
+              {navLinks.map((link, index) => {
+                return (
+                  <Link key={index} href={link.routeLink}>
+                    <Button
+                      className={displayLinks(link.routeLink)}
+                      key={index}
+                      sx={{ my: 2, color: "white", display: "block" }}
+                    >
+                      {link?.routeName}
+                    </Button>
+                  </Link>
+                );
+              })}
             </Box>
           </Toolbar>
         </Container>
@@ -167,5 +184,13 @@ const ContainerHeader = styled.header`
   .link {
     text-decoration: none;
     color: ${(props) => props.theme.colors.textColor1};
+  }
+
+  .active {
+    color: white;
+  }
+
+  .inactive {
+    color: rgb(255 255 255 / 40%);
   }
 `;
