@@ -7,6 +7,7 @@ import {
   limitStringsWithWords,
 } from "src/utils/string-manipulation";
 import styled from "styled-components";
+import { deviceBreakpoints } from "styles/breakpoints";
 import { LargeWrapper } from "styles/wrappers";
 import { MoviesData } from "../page-movies";
 
@@ -54,10 +55,19 @@ const ContainerPageMoviesContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+
+    @media ${deviceBreakpoints.tablet} {
+      justify-content: center;
+    }
   }
 
   .custom_card_item {
     max-width: 300px;
     height: 200px;
+
+    @media ${deviceBreakpoints.tablet} {
+      width: 100%;
+      max-width: inherit;
+    }
   }
 `;

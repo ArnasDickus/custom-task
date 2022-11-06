@@ -82,15 +82,17 @@ const PageCharacters = () => {
       <div className="container">
         <LargeWrapper>
           <div>
-            <TextField
-              label="Search characters"
-              variant="standard"
-              value={searchTextVal}
-              onChange={(e) => {
-                debouncedSearch(e?.target?.value);
-                setSearchTextVal(e?.target?.value);
-              }}
-            />
+            {page < 2 ? (
+              <TextField
+                label="Search characters"
+                variant="standard"
+                value={searchTextVal}
+                onChange={(e) => {
+                  debouncedSearch(e?.target?.value);
+                  setSearchTextVal(e?.target?.value);
+                }}
+              />
+            ) : null}
           </div>
           <div className="custom_card_container">
             {swapiCharacters?.map((character, index) => {
@@ -114,6 +116,8 @@ const PageCharacters = () => {
               disabled={page <= 1}
               onClick={() => {
                 if (page > 1) {
+                  setDebouncedSearchText("");
+                  setSearchTextVal("");
                   setPage((oldVal) => oldVal - 1);
                 }
               }}
@@ -124,6 +128,8 @@ const PageCharacters = () => {
               disabled={page * 10 >= pageCount}
               onClick={() => {
                 if (page * 10 < pageCount) {
+                  setDebouncedSearchText("");
+                  setSearchTextVal("");
                   setPage((oldVal) => oldVal + 1);
                 }
               }}
